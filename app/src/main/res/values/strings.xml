@@ -1,0 +1,26 @@
+<resources>
+    <string name="app_name">AuthorizationTemplate</string>
+    <string name="SignIn">Войти</string>
+    <string name="password">Пароль</string>
+    <string name="email">Email</string>
+    <string name="action_logout">Выйти</string>
+    <string name="create_account">Создать аккаунт</string>
+    <string name="user_name_title">Ваше имя</string>
+    <string name="phone_number">Телефон</string>
+    <string name="confirm_password">Повторите пароль</string>
+    <string name="all_fields_must_be_filled">Необходимо заполнить все поля</string>
+    <string name="already_have_account">У вас уже есть аккаунт?</string>
+    <string name="authorization_template">Шаблон авторизации</string>
+
+    <!-- Registration strings -->
+
+    <string name="password_not_match">Пароли не совпадают</string>
+    <string name="user_already_exists">Пользователь уже существует</string>
+
+    <!-- Resolutions strings -->
+
+    <string name="wrong_login_password">Логин или пароль введены неправильно</string>
+    <string name="access_denied">Отказано в доступе</string>
+    <string name="service_is_unavailable">Сервис временно не доступен</string>
+    <string name="no_internet_connection">Нет подключения к интернету</string>
+</resources>

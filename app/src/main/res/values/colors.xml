@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="textColorGrayTitle">#42474C</color>
+    <color name="textColorGrayDialog">#555555</color>
+    <color name="textColorError">#D8232A</color>
+    <color name="textColorWhite">#FFFFFF</color>
+
+    <color name="colorStrokeInput">#E4E7EB</color>
+    <color name="colorStrokeDialog">#979797</color>
+    <color name="textInputBackground">#FAFAFA</color>
+</resources>
