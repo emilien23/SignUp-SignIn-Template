@@ -19,5 +19,5 @@ import dagger.Component;
 public interface AppComponent {
     LoginComponent addLoginComponent(LoginModule loginModule, NavigationModule navigationModule);
     RegistrationComponent addRegistrationComponent(RegistrationModule registrationModule, NavigationModule navigationModule);
-    MainComponent addMainComponent(MainModule mainModule);
+    MainComponent addMainComponent(MainModule mainModule, NavigationModule navigationModule);
 }

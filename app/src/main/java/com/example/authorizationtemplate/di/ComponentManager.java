@@ -52,10 +52,10 @@ public class ComponentManager {
                             .addRegistrationComponent(new RegistrationModule(view), new NavigationModule(context));
     }
 
-    public void addMainComponent(MainContract.View view) {
+    public void addMainComponent(MainContract.View view, Context context) {
         if(mainComponent == null)
             mainComponent = appComponent
-                    .addMainComponent(new MainModule(view));
+                    .addMainComponent(new MainModule(view), new NavigationModule(context));
     }
 
     public void initAppComponent(Context context) {

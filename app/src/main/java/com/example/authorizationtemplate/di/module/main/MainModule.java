@@ -2,9 +2,13 @@ package com.example.authorizationtemplate.di.module.main;
 
 import com.example.authorizationtemplate.ResourceProvider;
 import com.example.authorizationtemplate.data.network.NetworkService;
+import com.example.authorizationtemplate.data.repositories.auth.AuthRepository;
 import com.example.authorizationtemplate.data.repositories.main.MainRepository;
 import com.example.authorizationtemplate.data.repositories.main.MainRepositoryImpl;
+import com.example.authorizationtemplate.di.module.navigation.NavigationModule;
 import com.example.authorizationtemplate.di.scope.MainScope;
+import com.example.authorizationtemplate.domain.interactors.auth.logout.LogoutInteractor;
+import com.example.authorizationtemplate.domain.interactors.auth.logout.LogoutInteractorImpl;
 import com.example.authorizationtemplate.domain.interactors.get_string.GetStringInteractor;
 import com.example.authorizationtemplate.domain.interactors.get_string.GetStringInteractorImpl;
 import com.example.authorizationtemplate.presentation.main.MainContract;
@@ -14,7 +18,7 @@ import com.example.authorizationtemplate.utils.resolution.Resolution;
 import dagger.Module;
 import dagger.Provides;
 
-@Module(includes = {MainContractModule.class})
+@Module(includes = {MainContractModule.class, NavigationModule.class})
 public class MainModule {
 
     private final MainContract.View mainView;
@@ -27,6 +31,12 @@ public class MainModule {
     @Provides
     public Resolution provideResolution(ResourceProvider resourceProvider) {
         return new MainResolution(mainView, resourceProvider);
+    }
+
+    @MainScope
+    @Provides
+    public LogoutInteractor provideLogoutInteractor(AuthRepository authRepository) {
+        return new LogoutInteractorImpl(authRepository);
     }
 
     @MainScope

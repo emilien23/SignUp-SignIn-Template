@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void injectDependencies() {
-        ComponentManager.getInstance().addMainComponent(this);
+        ComponentManager.getInstance().addMainComponent(this, this);
         ComponentManager.getInstance().getMainComponent().inject(this);
     }
 
@@ -64,6 +66,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        ComponentManager.getInstance().clearMainComponent();
         presenter.destroy();
     }
 
@@ -75,5 +78,18 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     public void showString(String msg) {
         messageTextView.setText(msg);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if(item.getItemId() == R.id.action_logout)
+            presenter.logoutButtonClicked();
+        return true;
     }
 }
