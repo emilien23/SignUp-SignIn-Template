@@ -5,7 +5,9 @@ import android.app.Application;
 import com.example.authorizationtemplate.di.ComponentManager;
 import com.xfinity.resourceprovider.RpApplication;
 
-@RpApplication
+@RpApplication(generateColorProvider = false,
+        generateDimensionProvider = false,
+        generateIdProvider = false)
 public class App extends Application {
 
     @Override
