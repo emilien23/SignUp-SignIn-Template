@@ -2,17 +2,23 @@ package com.example.authorizationtemplate.domain.interactors.token_expired;
 
 
 import com.example.authorizationtemplate.data.repositories.auth.AuthRepository;
+import com.example.authorizationtemplate.domain.interactors.base.ReactiveInteractor;
+
+import io.reactivex.Scheduler;
 
 /**
  * Класс проверки токена на истечение даты
  * */
-public class TokenExpiredInteractorImpl implements TokenExpiredInteractor {
+public class TokenExpiredInteractorImpl extends ReactiveInteractor implements TokenExpiredInteractor {
 
     private TokenExpiredInteractor.Callback callback;
     private AuthRepository authRepository;
 
 
-    public TokenExpiredInteractorImpl(AuthRepository authRepository){
+    public TokenExpiredInteractorImpl(AuthRepository authRepository,
+                                      Scheduler threadExecutor,
+                                      Scheduler postExecutionThread) {
+        super(threadExecutor, postExecutionThread);
         this.authRepository = authRepository;
     }
 

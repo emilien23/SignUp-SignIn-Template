@@ -5,18 +5,17 @@ import com.example.authorizationtemplate.ResourceProvider;
 import com.example.authorizationtemplate.data.network.wrapper.ResolverCallbackWrapper;
 import com.example.authorizationtemplate.data.repositories.auth.AuthRepository;
 import com.example.authorizationtemplate.data.repositories.user.UserRepository;
+import com.example.authorizationtemplate.domain.interactors.base.ReactiveInteractor;
 import com.example.authorizationtemplate.domain.models.AddUserData;
 import com.example.authorizationtemplate.domain.models.TokenResponse;
 import com.example.authorizationtemplate.utils.resolution.Resolution;
 
-import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.CompositeDisposable;
-import io.reactivex.schedulers.Schedulers;
+import io.reactivex.Scheduler;
+import io.reactivex.disposables.Disposable;
 import retrofit2.Response;
 
-public class RegistrationInteractorImpl implements RegistrationInteractor {
+public class RegistrationInteractorImpl extends ReactiveInteractor implements RegistrationInteractor {
 
-    private CompositeDisposable compositeDisposable;
     private UserRepository userRepository;
     private AuthRepository authRepository;
     private RegistrationInteractor.Callback callback;
@@ -27,18 +26,21 @@ public class RegistrationInteractorImpl implements RegistrationInteractor {
     public RegistrationInteractorImpl(UserRepository userRepository,
                                       AuthRepository authRepository,
                                       Resolution resolution,
-                                      ResourceProvider resourceProvider){
+                                      ResourceProvider resourceProvider,
+                                      Scheduler threadExecutor,
+                                      Scheduler postExecutionThread) {
+        super(threadExecutor, postExecutionThread);
         this.resourceProvider = resourceProvider;
         this.userRepository = userRepository;
         this.authRepository = authRepository;
         this.resolution = resolution;
-        this.compositeDisposable = new CompositeDisposable();
     }
 
     @Override
     public void execute(AddUserData addUserData) {
-        compositeDisposable.add(userRepository.addUser(addUserData).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+        Disposable d = userRepository.addUser(addUserData)
+                .subscribeOn(threadExecutorScheduler)
+                .observeOn(postExecutionThreadScheduler)
                 .subscribeWith(new ResolverCallbackWrapper<TokenResponse>(resolution) {
                     @Override
                     protected void onSuccess(TokenResponse response) {
@@ -54,7 +56,8 @@ public class RegistrationInteractorImpl implements RegistrationInteractor {
                             if(baseResponse.code() == resourceProvider.getIntegers().getUserAlreadyExist())
                                     callback.onUserAlreadyExists();
                     }
-                }));
+                });
+        addDisposable(d);
     }
 
     @Override
@@ -64,7 +67,7 @@ public class RegistrationInteractorImpl implements RegistrationInteractor {
 
     @Override
     public void unsubscribe() {
-        compositeDisposable.clear();
+        dispose();
         this.callback = null;
     }
 }

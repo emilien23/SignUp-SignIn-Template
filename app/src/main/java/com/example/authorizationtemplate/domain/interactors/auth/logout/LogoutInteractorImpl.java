@@ -2,24 +2,31 @@ package com.example.authorizationtemplate.domain.interactors.auth.logout;
 
 
 import com.example.authorizationtemplate.data.repositories.auth.AuthRepository;
+import com.example.authorizationtemplate.domain.interactors.base.ReactiveInteractor;
 
+import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
 
-public class LogoutInteractorImpl implements LogoutInteractor {
+public class LogoutInteractorImpl extends ReactiveInteractor implements LogoutInteractor {
 
     private LogoutInteractor.Callback callback;
     private AuthRepository authRepository;
-    private Disposable disposable;
 
-    public LogoutInteractorImpl(AuthRepository authRepository) {
+    public LogoutInteractorImpl(AuthRepository authRepository,
+                                Scheduler threadExecutor,
+                                Scheduler postExecutionThread) {
+        super(threadExecutor, postExecutionThread);
         this.authRepository = authRepository;
     }
 
     @Override
     public void execute() {
-        disposable = authRepository
+        Disposable d = authRepository
                 .logout()
+                .subscribeOn(threadExecutorScheduler)
+                .observeOn(postExecutionThreadScheduler)
                 .subscribe(() -> callback.onLogout());
+        addDisposable(d);
     }
 
     @Override
@@ -30,9 +37,6 @@ public class LogoutInteractorImpl implements LogoutInteractor {
     @Override
     public void unsubscribe() {
         callback = null;
-        if(disposable != null) {
-            disposable.dispose();
-            disposable = null;
-        }
+        dispose();
     }
 }

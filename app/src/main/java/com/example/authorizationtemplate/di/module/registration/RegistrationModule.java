@@ -11,15 +11,17 @@ import com.example.authorizationtemplate.domain.interactors.registration.Confirm
 import com.example.authorizationtemplate.domain.interactors.registration.ConfirmPasswordInteractorImpl;
 import com.example.authorizationtemplate.domain.interactors.registration.RegistrationInteractor;
 import com.example.authorizationtemplate.domain.interactors.registration.RegistrationInteractorImpl;
-
 import com.example.authorizationtemplate.domain.mapper.BaseObjectsMapper;
 import com.example.authorizationtemplate.domain.mapper.RegistrationUserMapper;
 import com.example.authorizationtemplate.presentation.registration.RegistrationContract;
 import com.example.authorizationtemplate.presentation.registration.RegistrationResolution;
 import com.example.authorizationtemplate.utils.resolution.Resolution;
 
+import javax.inject.Named;
+
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.Scheduler;
 
 @Module(includes = {RegistrationContractModule.class, NavigationModule.class})
 public class RegistrationModule {
@@ -50,15 +52,20 @@ public class RegistrationModule {
 
     @RegistrationScope
     @Provides
-    public ConfirmPasswordInteractor provideConfirmPasswordInteractor() {
-        return new ConfirmPasswordInteractorImpl();
+    public ConfirmPasswordInteractor provideConfirmPasswordInteractor(@Named("executor") Scheduler threadExecutor,
+                                                                      @Named("post_execution") Scheduler postExecutionThread) {
+        return new ConfirmPasswordInteractorImpl(threadExecutor, postExecutionThread);
     }
 
     @RegistrationScope
     @Provides
     public RegistrationInteractor provideRegistrationInteractor(UserRepository userRepository, AuthRepository authRepository,
-                                                                Resolution resolution, ResourceProvider resourceProvider) {
-        return new RegistrationInteractorImpl(userRepository, authRepository, resolution,  resourceProvider);
+                                                                Resolution resolution, ResourceProvider resourceProvider,
+                                                                @Named("executor") Scheduler threadExecutor,
+                                                                @Named("post_execution") Scheduler postExecutionThread) {
+        return new RegistrationInteractorImpl(userRepository, authRepository,
+                resolution, resourceProvider,
+                threadExecutor, postExecutionThread);
     }
 
     @RegistrationScope

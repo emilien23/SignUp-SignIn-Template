@@ -1,6 +1,5 @@
 package com.example.authorizationtemplate.domain.interactors.registration;
 
-
 import com.example.authorizationtemplate.domain.interactors.base.BaseInteractor;
 
 public interface ConfirmPasswordInteractor extends BaseInteractor {

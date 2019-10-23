@@ -14,9 +14,26 @@ import javax.inject.Named;
 
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.Scheduler;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 @Module
 public class AppModule {
+
+    @AppScope
+    @Provides
+    @Named("executor")
+    public Scheduler provideThreadExecutor() {
+        return Schedulers.io();
+    }
+
+    @AppScope
+    @Provides
+    @Named("post_execution")
+    public Scheduler providePostExecutionThread() {
+        return AndroidSchedulers.mainThread();
+    }
 
     @AppScope
     @Provides

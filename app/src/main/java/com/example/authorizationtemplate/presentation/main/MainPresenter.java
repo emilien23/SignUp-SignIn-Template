@@ -3,18 +3,25 @@ package com.example.authorizationtemplate.presentation.main;
 import com.example.authorizationtemplate.GlobalNavigator;
 import com.example.authorizationtemplate.domain.interactors.auth.logout.LogoutInteractor;
 import com.example.authorizationtemplate.domain.interactors.get_string.GetStringInteractor;
+import com.example.authorizationtemplate.domain.interactors.token_expired.TokenExpiredInteractor;
 
 import javax.inject.Inject;
 
 public class MainPresenter implements MainContract.Presenter, GetStringInteractor.Callback, LogoutInteractor.Callback {
 
-    private GetStringInteractor getStringInteractor;
     private MainContract.View view;
+    private GetStringInteractor getStringInteractor;
+    private TokenExpiredInteractor tokenExpiredInteractor;
     private LogoutInteractor logoutInteractor;
     private GlobalNavigator navigator;
 
     @Inject
-    public MainPresenter(LogoutInteractor logoutInteractor, GetStringInteractor getStringInteractor, GlobalNavigator navigator, MainContract.View view){
+    MainPresenter(LogoutInteractor logoutInteractor,
+                  GetStringInteractor getStringInteractor,
+                  TokenExpiredInteractor tokenExpiredInteractor,
+                  GlobalNavigator navigator,
+                  MainContract.View view) {
+        this.tokenExpiredInteractor = tokenExpiredInteractor;
         this.logoutInteractor = logoutInteractor;
         this.navigator = navigator;
         this.getStringInteractor = getStringInteractor;
@@ -28,6 +35,7 @@ public class MainPresenter implements MainContract.Presenter, GetStringInteracto
     public void resume() {
         logoutInteractor.subscribeToCallback(this);
         getStringInteractor.subscribeToCallback(this);
+        tokenExpiredInteractor.checkTokenExpired();
         getStringFromServer();
     }
 
@@ -35,6 +43,7 @@ public class MainPresenter implements MainContract.Presenter, GetStringInteracto
     public void pause() {
         getStringInteractor.unsubscribe();
         logoutInteractor.unsubscribe();
+        tokenExpiredInteractor.unsubscribe();
     }
 
     @Override

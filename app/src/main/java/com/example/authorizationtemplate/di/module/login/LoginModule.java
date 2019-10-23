@@ -11,8 +11,11 @@ import com.example.authorizationtemplate.presentation.login.LoginContract;
 import com.example.authorizationtemplate.presentation.login.LoginResolution;
 import com.example.authorizationtemplate.utils.resolution.Resolution;
 
+import javax.inject.Named;
+
 import dagger.Module;
 import dagger.Provides;
+import io.reactivex.Scheduler;
 
 @Module(includes = {LoginContractModule.class, NavigationModule.class})
 public class LoginModule {
@@ -31,8 +34,12 @@ public class LoginModule {
 
     @LoginScope
     @Provides
-    public LoginInteractor provideLoginInteractor(AuthRepository authRepository, GlobalNavigator navigator, Resolution resolution) {
-        return new LoginInteractorImpl(authRepository, navigator, resolution);
+    public LoginInteractor provideLoginInteractor(AuthRepository authRepository,
+                                                  GlobalNavigator navigator,
+                                                  Resolution resolution,
+                                                  @Named("executor") Scheduler threadExecutor,
+                                                  @Named("post_execution") Scheduler postExecutionThread) {
+        return new LoginInteractorImpl(authRepository, navigator, resolution, threadExecutor, postExecutionThread);
     }
 
     @LoginScope
