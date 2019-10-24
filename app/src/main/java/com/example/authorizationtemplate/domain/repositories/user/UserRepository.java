@@ -1,8 +1,7 @@
-package com.example.authorizationtemplate.data.repositories.user;
+package com.example.authorizationtemplate.domain.repositories.user;
 
 import com.example.authorizationtemplate.domain.models.AddUserData;
 import com.example.authorizationtemplate.domain.models.TokenResponse;
-
 
 import io.reactivex.Observable;
 import retrofit2.Response;

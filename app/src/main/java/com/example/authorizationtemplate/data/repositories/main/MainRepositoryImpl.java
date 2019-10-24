@@ -1,6 +1,7 @@
 package com.example.authorizationtemplate.data.repositories.main;
 
 import com.example.authorizationtemplate.data.network.NetworkService;
+import com.example.authorizationtemplate.domain.repositories.main.MainRepository;
 
 import io.reactivex.Observable;
 import retrofit2.Response;

@@ -5,6 +5,7 @@ import com.example.authorizationtemplate.domain.mapper.BaseObjectsMapper;
 import com.example.authorizationtemplate.domain.models.AddUserData;
 import com.example.authorizationtemplate.domain.models.RegistrationRequest;
 import com.example.authorizationtemplate.domain.models.TokenResponse;
+import com.example.authorizationtemplate.domain.repositories.user.UserRepository;
 
 import javax.inject.Inject;
 

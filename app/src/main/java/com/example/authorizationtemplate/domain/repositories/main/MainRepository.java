@@ -1,4 +1,4 @@
-package com.example.authorizationtemplate.data.repositories.main;
+package com.example.authorizationtemplate.domain.repositories.main;
 
 
 import io.reactivex.Observable;

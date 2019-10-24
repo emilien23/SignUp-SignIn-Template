@@ -2,7 +2,6 @@ package com.example.authorizationtemplate.domain.interactors;
 
 
 import com.example.authorizationtemplate.GlobalNavigator;
-import com.example.authorizationtemplate.data.repositories.auth.AuthRepository;
 import com.example.authorizationtemplate.domain.interactors.auth.login.LoginInteractor;
 import com.example.authorizationtemplate.utils.resolution.Resolution;
 

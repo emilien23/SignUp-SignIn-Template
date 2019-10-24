@@ -4,11 +4,11 @@ package com.example.authorizationtemplate.domain.interactors.auth.login;
 
 import com.example.authorizationtemplate.GlobalNavigator;
 import com.example.authorizationtemplate.data.network.wrapper.ResolverCallbackWrapper;
-import com.example.authorizationtemplate.data.repositories.auth.AuthRepository;
 import com.example.authorizationtemplate.domain.interactors.auth.AuthListener;
 import com.example.authorizationtemplate.domain.interactors.base.ReactiveInteractor;
 import com.example.authorizationtemplate.domain.models.LoginRequest;
 import com.example.authorizationtemplate.domain.models.TokenResponse;
+import com.example.authorizationtemplate.domain.repositories.auth.AuthRepository;
 import com.example.authorizationtemplate.utils.resolution.Resolution;
 
 import io.reactivex.Scheduler;

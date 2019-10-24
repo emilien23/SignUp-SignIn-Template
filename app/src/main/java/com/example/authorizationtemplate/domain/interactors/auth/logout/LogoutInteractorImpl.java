@@ -1,8 +1,8 @@
 package com.example.authorizationtemplate.domain.interactors.auth.logout;
 
 
-import com.example.authorizationtemplate.data.repositories.auth.AuthRepository;
 import com.example.authorizationtemplate.domain.interactors.base.ReactiveInteractor;
+import com.example.authorizationtemplate.domain.repositories.auth.AuthRepository;
 
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;

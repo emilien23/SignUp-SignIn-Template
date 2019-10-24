@@ -1,8 +1,8 @@
 package com.example.authorizationtemplate.domain.interactors.get_string;
 
 import com.example.authorizationtemplate.data.network.wrapper.ResolverCallbackWrapper;
-import com.example.authorizationtemplate.data.repositories.main.MainRepository;
 import com.example.authorizationtemplate.domain.interactors.base.ReactiveInteractor;
+import com.example.authorizationtemplate.domain.repositories.main.MainRepository;
 import com.example.authorizationtemplate.utils.resolution.Resolution;
 
 import io.reactivex.Scheduler;

@@ -8,6 +8,7 @@ import com.example.authorizationtemplate.data.network.auth.SessionListener;
 import com.example.authorizationtemplate.domain.interactors.auth.AuthListener;
 import com.example.authorizationtemplate.domain.models.LoginRequest;
 import com.example.authorizationtemplate.domain.models.TokenResponse;
+import com.example.authorizationtemplate.domain.repositories.auth.AuthRepository;
 
 import javax.inject.Inject;
 

@@ -6,9 +6,9 @@ import android.content.Context;
 import com.example.authorizationtemplate.ResourceProvider;
 import com.example.authorizationtemplate.data.network.NetworkService;
 import com.example.authorizationtemplate.data.network.auth.AuthHolder;
-import com.example.authorizationtemplate.data.repositories.auth.AuthRepository;
 import com.example.authorizationtemplate.data.repositories.auth.AuthRepositoryImpl;
 import com.example.authorizationtemplate.di.scope.AppScope;
+import com.example.authorizationtemplate.domain.repositories.auth.AuthRepository;
 
 import javax.inject.Named;
 

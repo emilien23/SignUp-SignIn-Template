@@ -1,8 +1,8 @@
 package com.example.authorizationtemplate.domain.interactors.token_expired;
 
 
-import com.example.authorizationtemplate.data.repositories.auth.AuthRepository;
 import com.example.authorizationtemplate.domain.interactors.base.ReactiveInteractor;
+import com.example.authorizationtemplate.domain.repositories.auth.AuthRepository;
 
 import io.reactivex.Scheduler;
 

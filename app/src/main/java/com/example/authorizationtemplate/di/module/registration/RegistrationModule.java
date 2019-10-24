@@ -2,8 +2,6 @@ package com.example.authorizationtemplate.di.module.registration;
 
 import com.example.authorizationtemplate.ResourceProvider;
 import com.example.authorizationtemplate.data.network.NetworkService;
-import com.example.authorizationtemplate.data.repositories.auth.AuthRepository;
-import com.example.authorizationtemplate.data.repositories.user.UserRepository;
 import com.example.authorizationtemplate.data.repositories.user.UserRepositoryImpl;
 import com.example.authorizationtemplate.di.module.navigation.NavigationModule;
 import com.example.authorizationtemplate.di.scope.RegistrationScope;
@@ -13,6 +11,8 @@ import com.example.authorizationtemplate.domain.interactors.registration.Registr
 import com.example.authorizationtemplate.domain.interactors.registration.RegistrationInteractorImpl;
 import com.example.authorizationtemplate.domain.mapper.BaseObjectsMapper;
 import com.example.authorizationtemplate.domain.mapper.RegistrationUserMapper;
+import com.example.authorizationtemplate.domain.repositories.auth.AuthRepository;
+import com.example.authorizationtemplate.domain.repositories.user.UserRepository;
 import com.example.authorizationtemplate.presentation.registration.RegistrationContract;
 import com.example.authorizationtemplate.presentation.registration.RegistrationResolution;
 import com.example.authorizationtemplate.utils.resolution.Resolution;

@@ -2,8 +2,6 @@ package com.example.authorizationtemplate.di.module.main;
 
 import com.example.authorizationtemplate.ResourceProvider;
 import com.example.authorizationtemplate.data.network.NetworkService;
-import com.example.authorizationtemplate.data.repositories.auth.AuthRepository;
-import com.example.authorizationtemplate.data.repositories.main.MainRepository;
 import com.example.authorizationtemplate.data.repositories.main.MainRepositoryImpl;
 import com.example.authorizationtemplate.di.module.navigation.NavigationModule;
 import com.example.authorizationtemplate.di.scope.MainScope;
@@ -13,6 +11,8 @@ import com.example.authorizationtemplate.domain.interactors.get_string.GetString
 import com.example.authorizationtemplate.domain.interactors.get_string.GetStringInteractorImpl;
 import com.example.authorizationtemplate.domain.interactors.token_expired.TokenExpiredInteractor;
 import com.example.authorizationtemplate.domain.interactors.token_expired.TokenExpiredInteractorImpl;
+import com.example.authorizationtemplate.domain.repositories.auth.AuthRepository;
+import com.example.authorizationtemplate.domain.repositories.main.MainRepository;
 import com.example.authorizationtemplate.presentation.main.MainContract;
 import com.example.authorizationtemplate.presentation.main.MainResolution;
 import com.example.authorizationtemplate.utils.resolution.Resolution;
