@@ -7,7 +7,7 @@ public interface TokenExpiredInteractor extends BaseInteractor {
 
     void subscribeToCallback(Callback callback);
 
-    void checkTokenExpired();
+    void execute();
 
     interface Callback {
         void isCheckTokenExpired(Boolean isExpired);

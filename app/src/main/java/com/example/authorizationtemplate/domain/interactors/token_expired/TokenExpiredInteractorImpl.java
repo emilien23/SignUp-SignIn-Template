@@ -14,7 +14,6 @@ public class TokenExpiredInteractorImpl extends ReactiveInteractor implements To
     private TokenExpiredInteractor.Callback callback;
     private AuthRepository authRepository;
 
-
     public TokenExpiredInteractorImpl(AuthRepository authRepository,
                                       Scheduler threadExecutor,
                                       Scheduler postExecutionThread) {
@@ -28,7 +27,7 @@ public class TokenExpiredInteractorImpl extends ReactiveInteractor implements To
     }
 
     @Override
-    public void checkTokenExpired() {
+    public void execute() {
         callback.isCheckTokenExpired(authRepository.isTokenDateExpired());
     }
 

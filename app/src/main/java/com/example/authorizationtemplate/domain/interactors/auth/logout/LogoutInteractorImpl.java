@@ -7,6 +7,7 @@ import com.example.authorizationtemplate.domain.repositories.auth.AuthRepository
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
 
+
 public class LogoutInteractorImpl extends ReactiveInteractor implements LogoutInteractor {
 
     private LogoutInteractor.Callback callback;
@@ -25,7 +26,11 @@ public class LogoutInteractorImpl extends ReactiveInteractor implements LogoutIn
                 .logout()
                 .subscribeOn(threadExecutorScheduler)
                 .observeOn(postExecutionThreadScheduler)
-                .subscribe(() -> callback.onLogout());
+                .subscribe(() -> {
+                            if(callback != null)
+                                callback.onLogout();
+                    }
+                        );
         addDisposable(d);
     }
 

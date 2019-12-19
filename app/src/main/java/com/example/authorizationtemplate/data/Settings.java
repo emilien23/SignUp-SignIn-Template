@@ -5,10 +5,10 @@ import android.content.SharedPreferences;
 
 public class Settings {
 
-    public static final String APP_PREFERENCES_NAME = "settings";
-    public static final String APP_PREFERENCES_TOKEN_DATE_EXPIRED = "token_date_expired";
-    public static final String APP_PREFERENCES_ACCESS_TOKEN = "access";
-    public static final String APP_PREFERENCES_REFRESH_TOKEN = "refresh";
+    private static final String APP_PREFERENCES_NAME = "settings";
+    private static final String APP_PREFERENCES_TOKEN_DATE_EXPIRED = "token_date_expired";
+    private static final String APP_PREFERENCES_ACCESS_TOKEN = "access";
+    private static final String APP_PREFERENCES_REFRESH_TOKEN = "refresh";
 
     private static SharedPreferences preferences;
 
@@ -16,12 +16,16 @@ public class Settings {
 
     public static Settings getInstance(Context context){
         if(settings == null)
-            settings = new Settings(context);
+            synchronized (Settings.class){
+                if(settings == null)
+                    settings = new Settings(context);
+            }
+
         return settings;
     }
 
     private Settings(Context context) {
-        preferences = context.getApplicationContext()
+        preferences = context
                 .getSharedPreferences(APP_PREFERENCES_NAME, Context.MODE_PRIVATE);
     }
 

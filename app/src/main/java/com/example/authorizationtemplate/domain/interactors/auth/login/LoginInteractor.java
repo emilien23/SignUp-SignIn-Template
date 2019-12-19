@@ -2,10 +2,11 @@ package com.example.authorizationtemplate.domain.interactors.auth.login;
 
 
 import com.example.authorizationtemplate.domain.interactors.base.BaseInteractor;
+import com.example.authorizationtemplate.domain.models.LoginRequest;
 
 public interface LoginInteractor extends BaseInteractor {
 
-    void execute(String email, String password);
+    void execute(LoginRequest loginRequest);
 
     void subscribeToCallback(Callback callback);
 

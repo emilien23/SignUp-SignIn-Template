@@ -11,6 +11,7 @@ import com.example.authorizationtemplate.domain.models.TokenResponse;
 import com.example.authorizationtemplate.domain.repositories.auth.AuthRepository;
 import com.example.authorizationtemplate.utils.resolution.Resolution;
 
+
 import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
 
@@ -40,15 +41,20 @@ public class LoginInteractorImpl extends ReactiveInteractor implements LoginInte
         this.callback = callback;
     }
 
-    public void execute(String email, String password){
-        Disposable d = authRepository.login(new LoginRequest(email, password))
+    public void execute(LoginRequest loginRequest){
+        Disposable d = authRepository.login(loginRequest)
                 .subscribeOn(threadExecutorScheduler)
                 .observeOn(postExecutionThreadScheduler)
                 .subscribeWith(new ResolverCallbackWrapper<TokenResponse>(resolution) {
                     @Override
                     protected void onSuccess(TokenResponse response) {
-                        callback.onLoginSucceeded();
-                        authRepository.saveLoginData(response);
+                        if(callback != null) {
+                            callback.onLoginSucceeded();
+                            authRepository.saveLoginData(response);
+                        }
+                        else
+                            onError(new NullPointerException());
+
                     }
                 });
         addDisposable(d);

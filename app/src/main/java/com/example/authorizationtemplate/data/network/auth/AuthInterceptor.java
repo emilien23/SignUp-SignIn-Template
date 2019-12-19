@@ -21,7 +21,7 @@ public class AuthInterceptor implements Interceptor {
 
         Request.Builder requestBuilder = chain.request().newBuilder();
         if (chain.request().header(ACCESS_TOKEN_HEADER) == null) {
-            requestBuilder.addHeader(ACCESS_TOKEN_HEADER, "Token " + authHolder.getToken());
+            requestBuilder.addHeader(ACCESS_TOKEN_HEADER, authHolder.getToken());
         }
 
         return chain.proceed(requestBuilder.build());

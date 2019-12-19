@@ -15,20 +15,29 @@ import static org.junit.Assert.assertEquals;
 @RunWith(MockitoJUnitRunner.class)
 public class RegistrationUserMapperTest {
 
+    private static String NAME = "test";
+    private static String EMAIL = "test";
+    private static String PASSWORD = "test";
+
     private RegistrationUserMapper mapper;
 
     @Before
-    public void setup() {
+    public void setUp() {
         mapper = new RegistrationUserMapper();
     }
 
     @Test
     public void testValidMap() {
-        String name = "test";
-        String email = "test";
-        String password = "test";
 
-        AddUserData addUserData = new AddUserData(name, email, password);
+        AddUserData addUserData = new AddUserData(NAME, EMAIL, PASSWORD);
+        RegistrationRequest registrationRequest = mapper.map(addUserData);
+
+        assertEquals(registrationRequest.getUsername(), addUserData.getName());
+    }
+
+    @Test
+    public void testMap_when_null() {
+        AddUserData addUserData = new AddUserData(null, null, null);
         RegistrationRequest registrationRequest = mapper.map(addUserData);
 
         assertEquals(registrationRequest.getUsername(), addUserData.getName());

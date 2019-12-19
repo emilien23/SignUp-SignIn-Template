@@ -15,16 +15,16 @@ import retrofit2.Response;
 public class UserRepositoryImpl implements UserRepository {
 
     private NetworkService.CommonApi commonApi;
-    private BaseObjectsMapper mapper;
+    private BaseObjectsMapper<AddUserData, RegistrationRequest> mapper;
 
     @Inject
-    public UserRepositoryImpl(NetworkService.CommonApi commonApi, BaseObjectsMapper mapper) {
+    public UserRepositoryImpl(NetworkService.CommonApi commonApi, BaseObjectsMapper<AddUserData, RegistrationRequest> mapper) {
         this.commonApi = commonApi;
         this.mapper = mapper;
     }
 
     @Override
     public Observable<Response<TokenResponse>> addUser(AddUserData user) {
-        return commonApi.registration((RegistrationRequest)mapper.map(user));
+        return commonApi.registration(mapper.map(user));
     }
 }

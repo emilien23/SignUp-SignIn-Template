@@ -1,20 +1,20 @@
 package com.example.authorizationtemplate.domain.interactors;
 
-import com.example.authorizationtemplate.GlobalNavigator;
-import com.example.authorizationtemplate.domain.interactors.auth.login.LoginInteractor;
-import com.example.authorizationtemplate.domain.interactors.auth.login.LoginInteractorImpl;
-import com.example.authorizationtemplate.domain.models.LoginRequest;
+import com.example.authorizationtemplate.IntegerProvider;
+import com.example.authorizationtemplate.ResourceProvider;
+import com.example.authorizationtemplate.domain.interactors.registration.RegistrationInteractor;
+import com.example.authorizationtemplate.domain.interactors.registration.RegistrationInteractorImpl;
+import com.example.authorizationtemplate.domain.models.AddUserData;
 import com.example.authorizationtemplate.domain.models.TokenResponse;
 import com.example.authorizationtemplate.domain.repositories.auth.AuthRepository;
+import com.example.authorizationtemplate.domain.repositories.user.UserRepository;
 import com.example.authorizationtemplate.utils.resolution.Resolution;
-
 
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -32,21 +32,26 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.powermock.api.mockito.PowerMockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class LoginInteractorTest {
+public class RegistrationInteractorTest {
 
+    private final String NAME_VALID = "validName";
+    private final String NAME_ERROR = "errorError";
     private final String EMAIL_VALID = "validEmail";
     private final String EMAIL_ERROR = "errorEmail";
     private final String PASSWORD_VALID = "validPassword";
     private final String PASSWORD_ERROR = "errorPassword";
-    private final Integer CODE_FORBIDDEN = 403;
+    private final Integer CODE_ALREADY_EXISTS = 403;
 
     @Mock
-    private LoginInteractor.Callback callback;
-
+    private RegistrationInteractor.Callback callback;
+    @Mock
+    private UserRepository userRepository;
     @Mock
     private AuthRepository authRepository;
     @Mock
-    private GlobalNavigator globalNavigator;
+    private ResourceProvider resourceProvider;
+    @Mock
+    private IntegerProvider integerProvider;
     @Mock
     private Resolution resolution;
     @Mock
@@ -55,27 +60,27 @@ public class LoginInteractorTest {
     private Response<TokenResponse> successResponse;
     private Response<TokenResponse> errorResponse;
 
-    private LoginInteractor loginInteractor;
-    private LoginRequest validCredentials, errorCredentials;
+    private RegistrationInteractor registrationInteractor;
+    private AddUserData userDataValid, userDataError;
 
 
     @Before
     public void setUp(){
         makeValidCredentials();
         makeErrorCredentials();
-        loginInteractor =
-                new LoginInteractorImpl(authRepository, globalNavigator, resolution,
+        registrationInteractor =
+                new RegistrationInteractorImpl(userRepository, authRepository, resolution,resourceProvider,
                         Schedulers.trampoline(), Schedulers.trampoline());
         makeMockSuccessResponse();
         makeMockErrorResponse();
     }
 
     private void makeValidCredentials() {
-        validCredentials = new LoginRequest(EMAIL_VALID, PASSWORD_VALID);
+        userDataValid = new AddUserData(NAME_VALID, EMAIL_VALID, PASSWORD_VALID);
     }
 
     private void makeErrorCredentials() {
-        errorCredentials = new LoginRequest(EMAIL_ERROR, PASSWORD_ERROR);
+        userDataError = new AddUserData(NAME_ERROR, EMAIL_ERROR, PASSWORD_ERROR);
     }
 
     private void makeMockSuccessResponse(){
@@ -84,7 +89,7 @@ public class LoginInteractorTest {
 
     private void makeMockErrorResponse(){
         errorResponse = Response.error(
-                CODE_FORBIDDEN,
+                CODE_ALREADY_EXISTS,
                 ResponseBody.create(
                         MediaType.parse("application/json"),
                         "{\"message\":[\"error\"]}"
@@ -92,33 +97,35 @@ public class LoginInteractorTest {
     }
 
     @Test
-    public void testLogin_with_valid_credentials() {
-        when(authRepository.login(validCredentials)).thenReturn(Observable.just(successResponse));
+    public void testRegistration_with_valid_credentials() {
+        when(userRepository.addUser(userDataValid)).thenReturn(Observable.just(successResponse));
 
-        loginInteractor.subscribeToCallback(callback);
-        loginInteractor.execute(validCredentials);
+        registrationInteractor.subscribeToCallback(callback);
+        registrationInteractor.execute(userDataValid);
 
         verify(authRepository).saveLoginData(token);
-        verify(callback).onLoginSucceeded();
+        verify(callback).onRegistrationSucceeded();
 
         verifyNoMoreInteractions(resolution);
     }
 
     @Test
-    public void testLogin_with_error_credentials() {
-        when(authRepository.login(errorCredentials)).thenReturn(Observable.just(errorResponse));
+    public void testRegistration_with_error_credentials() {
+        when(userRepository.addUser(userDataError)).thenReturn(Observable.just(errorResponse));
+        when(resourceProvider.getIntegers()).thenReturn(integerProvider);
+        when(integerProvider.getUserAlreadyExist()).thenReturn(CODE_ALREADY_EXISTS);
 
-        loginInteractor.subscribeToCallback(callback);
-        loginInteractor.execute(errorCredentials);
+        registrationInteractor.subscribeToCallback(callback);
+        registrationInteractor.execute(userDataError);
 
+        verify(callback).onUserAlreadyExists();
         verify(authRepository, never()).saveLoginData(token);
-        verify(callback, never()).onLoginSucceeded();
-        verify(resolution).onHttpException(CODE_FORBIDDEN);
+        verify(callback, never()).onRegistrationSucceeded();
         verify(resolution, never()).onConnectivityUnavailable();
     }
 
     @After
-    public void after(){ loginInteractor.unsubscribe(); }
+    public void after(){ registrationInteractor.unsubscribe(); }
 
     @AfterClass
     public static void afterClass(){

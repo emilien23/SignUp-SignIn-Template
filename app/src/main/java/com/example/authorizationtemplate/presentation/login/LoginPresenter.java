@@ -4,6 +4,7 @@ package com.example.authorizationtemplate.presentation.login;
 
 import com.example.authorizationtemplate.GlobalNavigator;
 import com.example.authorizationtemplate.domain.interactors.auth.login.LoginInteractor;
+import com.example.authorizationtemplate.domain.models.LoginRequest;
 
 import javax.inject.Inject;
 
@@ -23,7 +24,10 @@ public class LoginPresenter implements LoginContract.Presenter, LoginInteractor.
         this.navigator = navigator;
     }
 
-    public void setAuthData(String email, String password){ loginInteractor.execute(email, password); }
+    public void setAuthData(String email, String password){
+        LoginRequest loginRequest = new LoginRequest(email, password);
+        loginInteractor.execute(loginRequest);
+    }
 
     @Override
     public void registrationButtonClicked() {

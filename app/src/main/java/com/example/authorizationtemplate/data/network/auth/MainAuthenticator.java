@@ -28,7 +28,7 @@ public class MainAuthenticator implements Authenticator {
     @Override
     public synchronized Request authenticate(Route route, Response response) {
         String storedToken = authHolder.getToken();
-        String requestToken = "Token " + response.request().header(ACCESS_TOKEN_HEADER);
+        String requestToken = response.request().header(ACCESS_TOKEN_HEADER);
 
         Request.Builder requestBuilder = response.request().newBuilder();
 

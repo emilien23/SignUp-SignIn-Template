@@ -35,7 +35,7 @@ public class MainPresenter implements MainContract.Presenter, GetStringInteracto
     public void resume() {
         logoutInteractor.subscribeToCallback(this);
         getStringInteractor.subscribeToCallback(this);
-        tokenExpiredInteractor.checkTokenExpired();
+        tokenExpiredInteractor.execute();
         getStringFromServer();
     }
 

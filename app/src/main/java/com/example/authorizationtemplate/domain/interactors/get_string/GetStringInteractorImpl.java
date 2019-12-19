@@ -36,10 +36,12 @@ public class GetStringInteractorImpl extends ReactiveInteractor implements GetSt
                 .subscribeWith(new ResolverCallbackWrapper<String>(resolution) {
                     @Override
                     protected void onSuccess(String response) {
-                        callback.onStringDelivered(response);
+                        if(callback != null)
+                            callback.onStringDelivered(response);
+                        else
+                            onError(new NullPointerException());
                     }
                 });
-
         addDisposable(d);
     }
 

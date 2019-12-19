@@ -15,6 +15,7 @@ import okhttp3.Response;
  * Перехват запросов при отсутствии интернета для вывода предупреждающего сообщения
  * */
 public class ConnectivityInterceptor implements Interceptor{
+
     private Context context;
 
     public ConnectivityInterceptor(Context context){

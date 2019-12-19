@@ -29,7 +29,7 @@ public class AuthRepositoryImpl implements AuthRepository, SessionListener {
     public AuthRepositoryImpl(NetworkService.CommonApi commonApi, AuthHolder authHolder) {
         this.authHolder = authHolder;
         this.commonApi = commonApi;
-        authHolder.subscribeToSessionExpired(this);
+        this.authHolder.subscribeToSessionExpired(this);
     }
 
     @Override
