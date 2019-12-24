@@ -1,7 +1,5 @@
 package com.example.authorizationtemplate.data.network.auth;
 
-import androidx.annotation.NonNull;
-
 
 import com.example.authorizationtemplate.data.Settings;
 import com.example.authorizationtemplate.data.network.NetworkService;
@@ -25,21 +23,17 @@ public class AuthHolder {
         this.settings = settings;
     }
 
-    @NonNull
     public String getToken() { return settings.getAccessToken(); }
 
-    @NonNull
     public void setLoginData(TokenResponse response) {
          settings.setAccessToken(response.getAccessToken());
          settings.setTokenDateExpired(response.getDatetimeExpired());
     }
 
-    @NonNull
     public void clearLoginData() {
         settings.clearSettings();
     }
 
-    @NonNull
     public boolean isTokenExpired() {
         if(settings.getAccessToken() == null)
             return true;

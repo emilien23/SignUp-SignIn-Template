@@ -1,6 +1,7 @@
 package com.example.authorizationtemplate.data.repositories.main;
 
 import com.example.authorizationtemplate.data.network.NetworkService;
+import com.example.authorizationtemplate.domain.models.Info;
 import com.example.authorizationtemplate.domain.repositories.main.MainRepository;
 
 import io.reactivex.Observable;
@@ -15,7 +16,7 @@ public class MainRepositoryImpl implements MainRepository {
     }
 
     @Override
-    public Observable<Response<String>> getString() {
+    public Observable<Response<Info>> getString() {
         return authApi.getString();
     }
 }

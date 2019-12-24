@@ -1,6 +1,7 @@
 package com.example.authorizationtemplate.data.network;
 
 
+import com.example.authorizationtemplate.domain.models.Info;
 import com.example.authorizationtemplate.domain.models.LoginRequest;
 import com.example.authorizationtemplate.domain.models.TokenResponse;
 import com.example.authorizationtemplate.domain.models.RegistrationRequest;
@@ -29,6 +30,6 @@ public interface NetworkService {
      * */
     interface AuthApi{
         @POST("getinfo/")
-        Observable<Response<String>> getString();
+        Observable<Response<Info>> getString();
     }
 }

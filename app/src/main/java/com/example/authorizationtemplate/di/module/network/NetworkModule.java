@@ -15,7 +15,7 @@ import okhttp3.ConnectionSpec;
 import okhttp3.TlsVersion;
 import okhttp3.logging.HttpLoggingInterceptor;
 
-@Module
+@Module(includes = MockModule.class)
 public class NetworkModule {
 
     static final String NETWORK_URL = "https://example.site.com/api/"; //PUT YOUR API ROUTE

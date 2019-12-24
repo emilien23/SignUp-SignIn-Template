@@ -3,6 +3,7 @@ package com.example.authorizationtemplate.domain.interactors;
 import com.example.authorizationtemplate.domain.interactors.get_string.GetStringInteractor;
 import com.example.authorizationtemplate.domain.interactors.get_string.GetStringInteractorImpl;
 
+import com.example.authorizationtemplate.domain.models.Info;
 import com.example.authorizationtemplate.domain.repositories.main.MainRepository;
 import com.example.authorizationtemplate.utils.resolution.Resolution;
 
@@ -41,8 +42,8 @@ public class GetStringInteractorTest {
     @Mock
     private Resolution resolution;
 
-    private Response<String> successResponse;
-    private Response<String> errorResponse;
+    private Response<Info> successResponse;
+    private Response<Info> errorResponse;
 
     private GetStringInteractor getStringInteractor;
 
@@ -56,7 +57,7 @@ public class GetStringInteractorTest {
     }
 
     private void makeMockSuccessResponse(){
-        successResponse = Response.success(RESPONSE_STRING);
+        successResponse = Response.success(new Info(RESPONSE_STRING));
     }
 
     private void makeMockErrorResponse(){

@@ -50,9 +50,9 @@ public class RegistrationActivity extends AppCompatActivity implements Registrat
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_registration);
-        presenter.create();
         ButterKnife.bind(this);
         injectDependencies();
+        presenter.create();
         setupActionBar();
         setupTextChangedListeners();
         tvErrorLogin.setVisibility(View.INVISIBLE);

@@ -1,6 +1,7 @@
 package com.example.authorizationtemplate.domain.interactors.get_string;
 
 import com.example.authorizationtemplate.domain.interactors.base.BaseInteractor;
+import com.example.authorizationtemplate.domain.models.Info;
 
 public interface GetStringInteractor extends BaseInteractor {
 
@@ -9,6 +10,6 @@ public interface GetStringInteractor extends BaseInteractor {
     void execute();
 
     interface Callback{
-        void onStringDelivered(String msg);
+        void onStringDelivered(Info msg);
     }
 }

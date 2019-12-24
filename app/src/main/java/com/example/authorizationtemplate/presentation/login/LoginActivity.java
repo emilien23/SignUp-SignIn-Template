@@ -83,10 +83,10 @@ public class LoginActivity extends AppCompatActivity implements LoginContract.Vi
     public void onClick(View v) {
         KeyboardUtils.hideKeyboard(this);
         switch (v.getId()) {
-            case R.id.btnRouteToLogin:
+            case R.id.btnRouteToRegistration:
                 presenter.registrationButtonClicked();
                 break;
-            case R.id.btnRegistration: {
+            case R.id.btnLogin: {
                 String username = editTextUserEmail.getText().toString();
                 String password = editTextPassword.getText().toString();
 

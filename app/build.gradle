@@ -4,6 +4,7 @@ android {
     def version = "1.0"
     def appName = "AuthorizationTemplate"
 
+    flavorDimensions "default"
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
     defaultConfig {
@@ -14,6 +15,7 @@ android {
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -28,6 +30,7 @@ android {
             }
         }
     }
+
     compileOptions {
         sourceCompatibility = '1.8'
         targetCompatibility = '1.8'
@@ -35,6 +38,11 @@ android {
 
     testOptions {
         unitTests.returnDefaultValues = true
+    }
+
+    productFlavors {
+        prod {}
+        mock {}
     }
 }
 
@@ -57,6 +65,8 @@ dependencies {
             'org.powermock:powermock-module-junit4:2.0.2',
             'org.powermock:powermock-api-mockito2:2.0.2'
     testImplementation 'com.github.IvanShafran:shared-preferences-mock:1.0'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+
 
 
     // RecyclerView

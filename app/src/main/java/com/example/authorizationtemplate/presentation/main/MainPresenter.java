@@ -4,10 +4,11 @@ import com.example.authorizationtemplate.GlobalNavigator;
 import com.example.authorizationtemplate.domain.interactors.auth.logout.LogoutInteractor;
 import com.example.authorizationtemplate.domain.interactors.get_string.GetStringInteractor;
 import com.example.authorizationtemplate.domain.interactors.token_expired.TokenExpiredInteractor;
+import com.example.authorizationtemplate.domain.models.Info;
 
 import javax.inject.Inject;
 
-public class MainPresenter implements MainContract.Presenter, GetStringInteractor.Callback, LogoutInteractor.Callback {
+public class MainPresenter implements MainContract.Presenter, TokenExpiredInteractor.Callback, GetStringInteractor.Callback, LogoutInteractor.Callback {
 
     private MainContract.View view;
     private GetStringInteractor getStringInteractor;
@@ -35,6 +36,7 @@ public class MainPresenter implements MainContract.Presenter, GetStringInteracto
     public void resume() {
         logoutInteractor.subscribeToCallback(this);
         getStringInteractor.subscribeToCallback(this);
+        tokenExpiredInteractor.subscribeToCallback(this);
         tokenExpiredInteractor.execute();
         getStringFromServer();
     }
@@ -59,8 +61,8 @@ public class MainPresenter implements MainContract.Presenter, GetStringInteracto
     }
 
     @Override
-    public void onStringDelivered(String msg) {
-        view.showString(msg);
+    public void onStringDelivered(Info msg) {
+        view.showString(msg.getData());
     }
 
     @Override
@@ -71,5 +73,11 @@ public class MainPresenter implements MainContract.Presenter, GetStringInteracto
     @Override
     public void onLogout() {
         navigator.navigateTo(GlobalNavigator.ACTION_LOGOUT);
+    }
+
+    @Override
+    public void isCheckTokenExpired(Boolean isExpired) {
+        if(isExpired)
+            onLogout();
     }
 }

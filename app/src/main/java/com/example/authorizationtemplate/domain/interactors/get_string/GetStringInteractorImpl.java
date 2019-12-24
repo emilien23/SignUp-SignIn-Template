@@ -2,6 +2,7 @@ package com.example.authorizationtemplate.domain.interactors.get_string;
 
 import com.example.authorizationtemplate.data.network.wrapper.ResolverCallbackWrapper;
 import com.example.authorizationtemplate.domain.interactors.base.ReactiveInteractor;
+import com.example.authorizationtemplate.domain.models.Info;
 import com.example.authorizationtemplate.domain.repositories.main.MainRepository;
 import com.example.authorizationtemplate.utils.resolution.Resolution;
 
@@ -33,9 +34,9 @@ public class GetStringInteractorImpl extends ReactiveInteractor implements GetSt
         Disposable d = mainRepository.getString()
                 .subscribeOn(threadExecutorScheduler)
                 .observeOn(postExecutionThreadScheduler)
-                .subscribeWith(new ResolverCallbackWrapper<String>(resolution) {
+                .subscribeWith(new ResolverCallbackWrapper<Info>(resolution) {
                     @Override
-                    protected void onSuccess(String response) {
+                    protected void onSuccess(Info response) {
                         if(callback != null)
                             callback.onStringDelivered(response);
                         else

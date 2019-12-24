@@ -30,10 +30,10 @@ public class GlobalNavigator {
                 startLogin();
                 break;
             case ACTION_MAIN:
-                startRegistration();
+                startMain();
                 break;
             case ACTION_REGISTRATION:
-                startMain();
+                startRegistration();
                 break;
             case ACTION_LOGOUT:
                 logout();
