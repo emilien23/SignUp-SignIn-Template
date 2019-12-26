@@ -10,13 +10,13 @@ public class TokenResponse {
     @SerializedName("datetime_expired")
     private String datetimeExpired;
 
-    @SerializedName("role")
-    private Integer role;
+    @SerializedName("refresh_token")
+    private String refreshToken;
 
-    public TokenResponse(String accessToken, String datetimeExpired, Integer role) {
+    public TokenResponse(String accessToken, String datetimeExpired, String refreshToken) {
         this.accessToken = accessToken;
         this.datetimeExpired = datetimeExpired;
-        this.role = role;
+        this.refreshToken = refreshToken;
     }
 
     public String getAccessToken() {
@@ -35,11 +35,11 @@ public class TokenResponse {
         this.datetimeExpired = datetimeExpired;
     }
 
-    public Integer getRole() {
-        return role;
+    public String getRefreshToken() {
+        return refreshToken;
     }
 
-    public void setRole(Integer role) {
-        this.role = role;
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
     }
 }

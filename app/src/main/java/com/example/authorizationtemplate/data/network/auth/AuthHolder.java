@@ -28,6 +28,7 @@ public class AuthHolder {
     public void setLoginData(TokenResponse response) {
          settings.setAccessToken(response.getAccessToken());
          settings.setTokenDateExpired(response.getDatetimeExpired());
+         settings.setRefreshToken(response.getRefreshToken());
     }
 
     public void clearLoginData() {

@@ -21,7 +21,7 @@ public class MockingInterceptor implements Interceptor {
 
     private final Random random;
 
-    MockingInterceptor(Context context) {
+    public MockingInterceptor(Context context) {
         handler = new RequestsHandler(context);
         random = new SecureRandom();
     }
